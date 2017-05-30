@@ -1,0 +1,50 @@
+'''text1:zen of python
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+You are very goog!
+Flat is better than nested.dddd
+Sparse is better than dense.
+Readability counts.
+gooooooooooooooooooooogle'''
+
+'''text2:
+Beautiful is better than Ugly.
+Explicit is better than implicit.
+Simple IS better than complex.
+Complex is better than complicated...
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts!There should be one-- and preferably only ONE,obvious way to do it.'''
+
+
+Differ 差异结果：
+- text1:zen of python
++ text2:
+- Beautiful is better than ugly.
+?                          ^
+
++ Beautiful is better than Ugly.
+?                          ^
+
+  Explicit is better than implicit.
+- Simple is better than complex.
+?        ^^
+
++ Simple IS better than complex.
+?        ^^
+
+- Complex is better than complicated.
++ Complex is better than complicated...
+?                                    ++
+
+- You are very goog!
+- Flat is better than nested.dddd
+?                            ----
+
++ Flat is better than nested.
+  Sparse is better than dense.
++ Readability counts!There should be one-- and preferably only ONE,obvious way to do it.
+- Readability counts.
+- gooooooooooooooooooooogle

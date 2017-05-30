@@ -1,0 +1,14 @@
+----------------heapq 模块-----------------
+#heapq:优先队列
+#主要方法：
+    heapify(List)         #将列表转换为优先队列
+    heappop(Heap)         #取出优先队列中最小的元素
+    heappush(Heap,item)  #将item插入优先队列heap
+    heappushpop(Heap,item)#将item插入优先队列heap同时返回最小元素
+    heapreplace(Heap,item) #类似heappushpop，但更高效
+    
+    
+    merge(L1,L2,...)        #将多个堆合并为一个堆，并返回一个生成器
+    nlargest(n,iterable,key=None) #返回序列中最大的n个元素，key指定比较依据
+    nsmallest(n,iterable,key=None #返回序列中最小的n个元素，key指定比较依据
+    

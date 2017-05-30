@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+#coding=utf-8
+#==================
+#stat 模块应用实例
+#==================
+
+import os,stat
+
+def fileType(mode):
+    print dir()

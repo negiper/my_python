@@ -1,0 +1,43 @@
+-------------------psutil 模块总结------------------
+
+Process类：
+    self.pid
+    self.name()
+    self.ppid()
+    self.exe()
+    self.cmdline()
+    ...
+    self.create_time()
+    注：两个实例相等当且仅当pid和create_time相等
+    
+    #查询进程的多个信息并以字典的形式返回
+    self.as_dict(['name','pid',...])
+    #as_dict 的调用会oneshot上下文管理器，用于提供对多个信息缓存查询
+    self.oneshot() #上下文管理器，打开和关闭缓存查询
+    #memoize和memoize_when_activated为缓存装饰器，为进程信息查询提供缓存功能
+    #提供缓存的有
+    self.cpu_times()
+    self.memory_info()
+    self.ppid()
+    self.uids()
+    
+    #最好给定一个时间间隔查询，若不提供interval，第一次查询将返回0.0
+    self.cpu_percent(interval=None)
+    
+    
+    self.send_signal() #给进程发送信号
+    self.suspend() #暂停进程(signal.SIGSTOP)
+    self.resume()  #恢复进程(signal.SIGCONT)
+    self.terminate() #结束进程(signal.SIGTERM)
+    self.kill() #杀死进程(signal.SIGKILL)
+    self.wait() #等待子进程结束
+    
+    #进程相关方法
+    pids()          #返回当前运行中的进程的pid列表
+    pid_exists()
+    process_iter() #当前运行中进程的生成器，每次返回一个Process实例
+                     #eg：[(x.name(),x.pid) for x in psutil.process_iter()]
+    wait_procs(procs,timeout=None,callback=None)
+                    #可以指定一个callback,在每一个procs中的进程退出时执行
+                    
+    test() #模拟ps aux 的功能

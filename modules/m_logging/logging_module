@@ -1,0 +1,4 @@
+---------------logging 模块----------------
+默认情况下，logging将日志打印到屏幕，级别为WARNING
+日志级别：CRITICAL > ERROR > WARNING > INFO > DEBUG > NOTEST
+

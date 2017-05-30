@@ -1,0 +1,59 @@
+#coding=utf-8
+#====================================
+#----------collections 模块---------
+#====================================
+
+import collections
+
+#【defaultdict】
+#其实defaultdict就是一个字典，只不过它为键赋了一个初始值。
+
+from collections import defaultdict
+
+frequencies = defaultdict(int) #利用int来初始化,初始值均为0
+for word in word_list:
+    frequencies[word] += 1
+    
+#【OrderedDict】
+from collections import OrderedDict
+keys = ['A', 'B', 'C']
+vals = [1,2,3]
+regular_dict = dict(zip(keys,vals))
+ordered_dict = OrderedDict(zip(keys,vals))
+
+print 'Regular dictionary:'
+for k,v in regular_dict.items():
+    print k,v
+    
+print 'Ordered dictionary:'
+for k,v in ordered_dict.items():
+    print k,v
+    
+
+#【deque】:双端队列——可以在一端进行插入和删除时间复杂度均为O(1)
+#例子：一个无尽循环的跑马灯
+import sys,time
+form collections import deque
+load_deque = deque('>--------------------')
+while True:
+    print '\r%s' % ''.join(load_deque)
+    #rotate(n)方法：轮转队列中的元素，默认向右轮转一个，n为负则向左轮转
+    load_deque.rotate()
+    sys.stdout.flush()
+    time.sleep(0.1)
+
+#【Counter】:计数器
+from collections import Counter
+
+s = 'jfiewfdsfewhfldsgjriewpgnv'
+c = Counter(s)
+print c.most_common(5)
+
+#【namedtuple】:命名元组
+form collections import namedtuple
+
+person = namedtuple('Person',['name','age','conutry'])
+#两种实例化方式
+p1 = person('Jenny','18','American')
+pt = ('Tom',21,'Canada')
+p2 = person._make(pt)

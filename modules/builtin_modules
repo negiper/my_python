@@ -1,0 +1,52 @@
+内置模块：__builtin__ 以及 exceptions 在python启动时自动导入
+【__builtin__】:
+<apply>: 
+	apply(func,[args[,kwargs]]) 用于当函数参数已经存在于一个元组或字典中，间接的调用函数
+	>args: 参数元组
+	>kwargs: 关键字参数的字典
+
+<__import__>:
+	MODULEALIAS = __import__(MODULE_STRING) 该内置函数接收模块字符串或变量名，并返回一个模块对象。该函数主要用于动态加载模块。
+	应用实例：
+	1）导入含有特殊字符的模块。
+	import glob,os
+	modules = []
+	
+	for m_file in glob.glob('*-plugin.py'):
+		try:
+			m_name,ext = os.path.splitext(os.path.basename(m_file))
+			module = __import__(m_name)
+			modules.append(module)
+		except ImportError:
+			pass
+	for m in modules:
+		m.hello()
+	
+	2）获取模块特定的属性。
+	def getfunctionbyname(module_name,fun_name):
+		module = __import__(module_name)
+		return getattr(module,fun_name)
+		#getattr(Object,Attr_Name) 等价于Object.Attr_Name，只不过Attr_Name可以用变量代替
+
+	repr(getfunctionbyname('os','times'))
+	
+	3）实现模块的延迟导入
+	class LazyImport(object):
+		def __init__(self,module_name):
+			self.module_name = module_name
+			self.module = None
+
+		def __getattr__(self,name):
+			if self.module is None:
+				self.module = __import__(self.module_name)
+			return getattr(self.module,name)
+	
+	string = LazyImport('string')
+	print string.lowercase
+	###
+	将模块的导入延迟到第一次使用的时候
+	###
+
+<dir>:
+	查看对象内的所有属性及方法
+	

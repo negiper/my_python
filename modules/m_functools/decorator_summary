@@ -1,0 +1,162 @@
+#coding=utf-8
+#========================
+#各种装饰器详解
+#========================
+
+#一、函数式装饰器
+#1. 装饰函数
+
+#1) 装饰器无参
+#2) 装饰器有参
+    
+>>> def mydeco(print_result=False):
+	def deco(func):
+        def _deco():
+			print 'Call the function: %s().' % func.func_name
+			if print_result:
+				print func()
+			else:
+				return func()
+		return _deco
+	return deco
+
+>>> @mydeco
+def say():
+	print 'Hello,world!'
+
+	
+>>> say()
+
+Traceback (most recent call last):
+  File "<pyshell#122>", line 1, in <module>
+    say()
+TypeError: deco() takes exactly 1 argument (0 given)
+>>> 
+>>> @mydeco()
+def say():
+	print 'Hello,world!'
+
+	
+>>> say()
+Call the function: say().
+Hello,world!
+#注：装饰器有参数时，语法糖必须给定参数，即使有默认值也必须添加小括号
+
+#2.装饰类
+>>> def mydeco(cls):
+	def wrapper(*args, **kwargs):
+		cls_name = re.findall('\w+',repr(cls))[-1]
+		print 'Call %s.__init__().' % cls_name
+		return cls(*args, **kwargs)
+	return wrapper
+
+>>> @mydeco
+class Person(object):
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+
+		
+>>> p1 = Person('Xiao Ming', 12)
+Call Person.__init__().
+>>> p1.name
+'Xiao Ming'
+>>> p1.age
+12
+#-----------------------------
+>>> def mydeco(print_name=False):
+	def deco(cls):
+		def _deco(*args,**kwargs):
+			cls_name = re.findall('\w+',repr(cls))[-1]
+			print 'Call %s.__init__().' % cls_name
+			obj = cls(*args, **kwargs)
+			if print_name:
+				print 'Hello, my name is %s.' % obj.name
+			return obj
+		return _deco
+	return deco
+
+>>> @mydeco()
+class Person(object):
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+
+		
+>>> p1 = Person('Tom',32)
+Call Person.__init__().
+>>> @mydeco(print_name=True)
+class Person(object):
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+
+		
+>>> p2 = Person('Jenny',18)
+Call Person.__init__().
+Hello, my name is Jenny.
+
+#二、类式装饰器：装饰器本身是一个类，需要实现__init__()和__call__()方法
+#   装饰器的参数传给__init__()方法；被装饰对象的参数被传给__call__()方法
+#1.装饰函数
+>>> class MyDecoCls(object):
+	def __init__(self, prefix='Call function:'):
+		self.prefix = prefix
+	def __call__(self,func):
+		def _call(*args, **kwargs):
+			print self.prefix + func.func_name
+			return func(*args, **kwargs)
+		return _call
+
+	
+>>> @MyDecoCls()
+def say():
+	print 'Hello,world!'
+
+	
+>>> say()
+Call function:say
+Hello,world!
+
+#2.装饰类
+>>> class MyDecoCls(object):
+	def __init__(self,print_name=False):
+		self.print_name = print_name
+	def __call__(self,cls):
+		def _call(*args, **kwargs):
+			cls_name = re.findall('\w+',repr(cls))[-1]
+			print 'Call %s.__init__()' % cls_name
+			obj = cls(*args, **kwargs)
+			if self.print_name:
+				print 'Hello, my name is %s' % obj.name
+			return obj
+		return _call
+
+	
+>>> @MyDecoCls()
+class Person(object):
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+
+		
+>>> p3 = Person('Tonny',24)
+Call Person.__init__()
+>>> @MyDecoCls(print_name=True)
+class Person(object):
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+
+		
+>>> p4 = Person('Jobs',45)
+Call Person.__init__()
+Hello, my name is Jobs
+
+#总结：
+    #1. @decorator 后面不带括号时(也即装饰器无参数)
+    #    效果相当于先定义func或cls，然后执行func=decorator(func)或 cls=decorator(cls)
+    
+    #2.@decorator后面带括号时(也即装饰器有参数)
+    #   效果相当于先定义func或cls，然后执行func=decorator(DecoArgs)(func)或cls=decorator(DecoArgs)(cls)
+    

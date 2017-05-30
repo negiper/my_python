@@ -1,0 +1,74 @@
+#------------stat 模块------------
+
+#---代表文件类型的常量：
+    S_IFDIR : 目录
+    S_IFREG : 文件
+    S_IFBLK : 块设备
+    S_IFCHR : 字符设备
+    S_IFIFO : 管道文件
+    S_IFLNK : 符号链接
+    S_IFSOCK: 套接字
+
+#---测试文件类型函数：
+    S_ISDIR(mode) #判断是否是目录
+    S_ISREG(mode) #文件
+    S_ISBLK(mode) #块设备
+    S_ISCHR(mode) #字符设备
+    S_ISFIFO(mode)#管道文件
+    S_ISLNK(mode) #符号链接
+    S_ISSOCK(mode)#套接字
+    (注：上述函数除了S_ISDIR和S_ISREG，其他的只有在unix环境下才有效。)
+    
+#---操作权限的函数：
+    S_IMODE(mode) #返回mode中可由chmod操作的权限
+    s_IFMT(mode)  #返回mode中描述文件类型的部分
+    
+#---os.stat返回的文件信息简单索引：
+    ST_MODE : 0
+    ST_INO  : 1
+    ST_DEV  : 2
+    ST_NLINK: 3
+    ST_UID  : 4
+    ST_GID  : 5
+    ST_SIZE : 6
+    ST_ATIME: 7
+    ST_MTIME: 8
+    ST_CTIME: 9
+    (注：ctime在类unix系统中表示文件元数据最后改变时间；在其他系统中代表文件的创建时间。)
+    
+#---chmod用于设置权限的参数：
+    S_ISUID # 设置UID位
+    S_ISGID #(=S_ENFMT)设置GID位
+    S_ISVTX # 设置粘滞位
+    
+    S_IRWXU #
+    S_IRUSR #(=S_IREAD)
+    S_IWUSR #(=S_IWRITE)
+    S_IXUSR #(=S_IEXEC)
+    
+    S_IRWXG #
+    S_IRGRP #
+    S_IWGRP #
+    S_IXGRP #
+    
+    S_IRWXO #
+    S_IROTH #
+    S_IWOTH #
+    S_IXOTH #
+
+#---os.chflags参数
+    UF_NODUMP    # 不备份文件
+    UF_IMMUTABLE # 文件不可以改变
+    UF_APPEND    # 文件仅可以追加
+    UF_OPAQUE    # 目录不透明
+    UF_NOUNLINK  # 文件不可改名或删除
+    UF_COMPRESSED# 压缩文件
+    UF_HIDDEN    # 文件不可见
+    
+    #---超级用户可用
+    SF_ARCHIVED  # 归档文件
+    SF_IMMUTABLE # 
+    SF_NONULINK  #
+    SF_APPEND    #
+    SF_SNAPSHOT  #
+    

@@ -1,0 +1,25 @@
+------------shutil 模块--------------
+shutil:拷贝和打包文件和目录树
+
+#主要的接口：
+    copyfileobj(fsrc,fdst,length=16*1024) #拷贝文件的底层代码 length:每次拷贝的数据长度
+    copyfile(src,dst) #拷贝文件
+    
+    copymode(src,dst)  #拷贝文件权限
+    copystat()          #拷贝文件的状态信息(权限和时间属性(atime,mtime))
+    
+    copy(src,dst) #拷贝文件数据和权限
+    copy2(src,dst)#拷贝文件数据和状态信息
+    
+    copytree(src,dst,symlinks=False,ignore=None)
+        #拷贝目录树，symlinks:为True则仅拷贝链接；为False则拷贝链接指向的文件。ignore：为一个函数，返回拷贝时跳过的文件列表
+    rmtree(path,...) #递归删除目录树
+    
+    move(src,dst) #递归移动目录树
+    
+    make_archive(base_name,format,root_dir=None,base_dir=None...)
+        #按格式打包文件和目录
+        #base_name:打包后的文件名
+        #format:   打包格式，支持的打包格式：zip,tar,gztar,bztar
+        #root_dir: 需要打包文件的位置
+        #base_dir: 打包后文件的路径

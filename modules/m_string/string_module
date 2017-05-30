@@ -1,0 +1,54 @@
+----------------------string 模块------------------------
+#字符集
+    ascii_letters   #52个英文字母 (=letters)
+    ascii_lowercase #小写英文字母 (=lowercase)
+    ascii_uppercase #大写英文字母 (=uppercase)
+    digits           #0123456789
+    octdigits        #01234567
+    hexdigits        #0123456789ABCDEF
+    printable        #可打印字符 100个
+    whitespace       #6个空白符  
+    #['\t':水平制表符,'\n':换行符,'\x0b(='\v')':垂直制表符,'\x0c(='\f'):换页符'\r':回车，' '空格]
+    punctuation      #32个标点符号
+    
+#类型转换函数
+    atof(s)
+    atof_error
+    atoi(s,base) #base若为0，则根据s前面来判断进制
+    atoi_error
+    atol(s,base) #...
+    atol_error
+    #可以利用简单的int和float代替
+    
+#对字符串的操作
+    center(s,width,[fillchar])    #将s置于长度为width的字符串的中间，并用fillchar填充剩余空间，fillchar默认为空格
+        >>>import struct,ctypes,string
+            h = ctypes.windll.kernel32.GetStdHandle(-11)
+            sbinfo = ctypes.create_string_buffer(22)
+            
+            r = ctypes.windll.kernel32.GetConsoleScreenBufferInfo(h,sbinfo)
+            (size_x,size_y,curser_x,curser_y,wattr,left,top,right,bottom,max_x,max_y) = struct.unpack('hhhhHhhhhhh',sbinfo.raw)
+            width = right - left #屏幕宽度
+            s = 'Hello!'
+            string.center(s,width-1,'*')
+    count(s,sub,[start,[end]]) #统计字串sub在s中出现的次数，start和end用于设置统计的范围
+        >>>#统计字符串中包含多少行文本
+            contents = 'This is\na \ngood idea!'
+            string.count(contents,'\n')
+            #输出：3
+    expandtabs(s,[tabsize]) #将s中的tab替换为空格，默认\t 代表8个空格，可以利用第二个参数tabsize进行修改
+    
+    L系列：find, index, lstrip, ljust, split
+    R系列：rfind, rindex, rstrip, rjust, rsplit
+    
+    strip()
+    join()
+    lower()
+    upper()
+    swapcase()
+    
+    maketrans(frm,to) #生成转换表，len(frm) == len(to)
+    translate(s,table,deletion='') #删除deletion中指定的字符后，按转换表table将字符串s做转换
+    
+    replace(s,old,new,maxreplace=-1) #将字符串s中old子串替换为new，maxreplace指定替换次数
+    zfill(s,width) #从左边用0填充width除去s占用的空间

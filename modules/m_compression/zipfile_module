@@ -1,0 +1,28 @@
+----------------zipfile 模块-----------------
+
+#主要的属性、方法：
+    is_zipfile(filename) #判断是否为zip文件
+    ZipFile(filename[,mode[,compression[,allowZip64]]])
+        #以mode打开或创建zip文件filename
+        #compression指定压缩格式
+        #allowZip64 为True则可以创建大于2G的zip文件
+    ZipInfo(filename) #获取zip文件信息
+    
+#ZipFile的实例方法(z = ZipFile(...))：
+    z.close()
+    z.extract(name[,path[,pwd]]) #将zip文件中的name提取到path下，pwd是提取密码
+    z.extractall(...)
+    
+    z.namelist() #返回zip文件中所有子文件的path
+    
+    z.infolist() #返回每个子文件的ZipInfo对象列表
+    
+    z.printdir() #打印zip文件的目录结构
+    
+    z.open(name[,mode[,pwd]]) #以mode方式打开子文件name，以便对其进行读写操作
+    
+    z.setpassword(pwd) #为zip文件设置密码
+    
+    z.write(filename[,arcname[compression_type]])
+        #将zip文件外的filename写入到arcname子文件中
+        
