@@ -1,0 +1,7 @@
+HI, This is a test file for logging.
+python is starting ...
+Alex is using python
+There is a user login
+A python program is running...
+The python program is restarted.
+the python is closed.
